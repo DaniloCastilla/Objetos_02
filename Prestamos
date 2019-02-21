@@ -1,0 +1,90 @@
+package P.O.O;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Prestamos {
+	
+	public static String nombreEmpresa = "Prestamos S.A.S";
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Interes I = new Interes();
+		Empleado E = new Empleado();
+		
+		int next = 1;
+		float monto;
+		float interes;
+		
+		
+		while(next==1) {
+			
+			System.out.println("Bienvenido a: " + nombreEmpresa);
+			
+			System.out.println("Nombre del empleado");
+			String Name = br.readLine();
+			
+			E.setNombreEmpleado(Name);
+			
+			System.out.println("¿Cuanto es el monto que pedirá prestado?");
+			monto = Float.parseFloat(br.readLine());
+			System.out.println("Interes que aplica el banco");
+			interes = Float.parseFloat(br.readLine());
+			
+			float interesTotal = I.calcularInteres(monto, interes);
+			float totalPago = I.calcularPagoTotal(monto, interesTotal);
+			
+			System.out.println("El pago total de interes es de: " + interesTotal);
+			System.out.println("El pago total del prestamo es de: " + totalPago);
+			
+			System.out.println("¿Desea salir? \n1)Si \n2)No");
+			next = Integer.parseInt(br.readLine());
+		}
+		
+	}
+	
+}
+
+class Empleado{
+	
+	private String nombreEmpleado;
+	
+	public Empleado() {}
+	
+	public Empleado(String nombreEmpleado) {
+		this.nombreEmpleado = nombreEmpleado;
+	}
+	
+	public void setNombreEmpleado(String newName) {
+		this.nombreEmpleado = newName;
+	}
+	
+	public String getNombreEmpleado() {
+		return this.nombreEmpleado;
+	}
+	
+	
+}
+
+class Interes{
+	
+	float interesMensual;
+	float totalPagar;
+	private float time = 6;
+	
+	public float calcularInteres(float monto, float interes) {
+		
+		this.interesMensual = ((monto*interes)/100)*time;
+		return this.interesMensual;
+		
+	}
+	
+	public float calcularPagoTotal(float monto, float interes) {
+		
+		this.totalPagar = monto + interesMensual;
+		return totalPagar;
+	}
+	
+}
